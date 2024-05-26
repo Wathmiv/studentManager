@@ -1,4 +1,5 @@
 package studentManager;
+
 import java.util.Scanner;
 
 public class StudentManager {
@@ -11,17 +12,16 @@ public class StudentManager {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            System.out.println("""
-                    -------------------------------------------------------------------------------
-                    |                        Welcome to Student Manager                           |
-                    -------------------------------------------------------------------------------
-                    
-                    [1] Add New Student                    [2] Add New Student With Marks
-                    [3] Add Marks                          [4] Update Student Details 
-                    [5] Update Marks                       [6] Delete Student
-                    [7] Print Student Details              [8] Print Student Ranks
-                    [9] Best in Programming Fundementals   [10] Best in Database Managemnt System
-                    """);
+            System.out.println(
+                    "-------------------------------------------------------------------------------\n" +
+                            "|                        Welcome to Student Manager                           |\n" +
+                            "-------------------------------------------------------------------------------\n" +
+                            "\n" +
+                            "[1] Add New Student                    [2] Add New Student With Marks\n" +
+                            "[3] Add Marks                          [4] Update Student Details\n" +
+                            "[5] Update Marks                       [6] Delete Student\n" +
+                            "[7] Print Student Details              [8] Print Student Ranks\n" +
+                            "[9] Best in Programming Fundamentals   [10] Best in Database Management System\n");
 
             System.out.print("Enter an option to continue >");
             int choice = scanner.nextInt();
@@ -46,16 +46,15 @@ public class StudentManager {
                     deleteStudent(scanner);
                     break;
                 case 7:
-                    //printStudentDetails(scanner);
+                    // printStudentDetails(scanner);
                     break;
                 case 8:
-                    //System.exit(0);
-                    break;
+                    
                 case 9:
-                    //System.exit(0);
+                    bestInProgrammingFundamentals(scanner);
                     break;
                 case 10:
-                    //System.exit(0);
+                    bestInDatabaseManagementSystem(scanner);
                     break;
                 default:
                     System.out.println("Invalid choice");
@@ -63,53 +62,54 @@ public class StudentManager {
         }
     }
 
-    public final static void clearConsole() { try 
-        { 
-        final String os = System.getProperty("os.name"); if 
-        (os.contains("Windows")) { new ProcessBuilder("cmd", "/c", 
-        "cls").inheritIO().start().waitFor(); 
-        } else { 
-        System.out.print("\033[H\033[2J"); 
-        System.out.flush(); 
-        } 
-        } catch (final Exception e) { 
-        e.printStackTrace(); 
-        } 
-        } 
-
-    private static void addStudent(Scanner scanner) {
-    while (true) {
-        clearConsole();
-        String id;
-        while (true) {
-            System.out.print("Enter student ID: ");
-            id = scanner.next();
-            boolean exists = false;
-            for (int i = 0; i < studentCount; i++) {
-                if (studentNames[i][0].equals(id)) {
-                    exists = true;
-                    break;
-                }
-            }
-            if (!exists) {
-                break;
+    public final static void clearConsole() {
+        try {
+            final String os = System.getProperty("os.name");
+            if (os.contains("Windows")) {
+                new ProcessBuilder("cmd", "/c",
+                        "cls").inheritIO().start().waitFor();
             } else {
-                System.out.println("This ID already exists.");
-                System.out.println("");
+                System.out.print("\033[H\033[2J");
+                System.out.flush();
             }
-        }
-        studentNames[studentCount][0] = id;
-        System.out.print("Enter student name : ");
-        String name = scanner.next();
-        studentNames[studentCount][1] = name;
-        studentCount++;
-        System.out.println("Student added successfully. Do you want to add another student? (Y/n)");
-        String choice = scanner.next();
-        if (choice.equals("n")) {
-            break;
+        } catch (final Exception e) {
+            e.printStackTrace();
         }
     }
-        
+
+    private static void addStudent(Scanner scanner) {
+        while (true) {
+            clearConsole();
+            String id;
+            while (true) {
+                System.out.print("Enter student ID: ");
+                id = scanner.next();
+                boolean exists = false;
+                for (int i = 0; i < studentCount; i++) {
+                    if (studentNames[i][0].equals(id)) {
+                        exists = true;
+                        break;
+                    }
+                }
+                if (!exists) {
+                    break;
+                } else {
+                    System.out.println("This ID already exists.");
+                    System.out.println("");
+                }
+            }
+            studentNames[studentCount][0] = id;
+            System.out.print("Enter student name : ");
+            String name = scanner.next();
+            studentNames[studentCount][1] = name;
+            studentCount++;
+            System.out.println("Student added successfully. Do you want to add another student? (Y/n)");
+            String choice = scanner.next();
+            if (choice.equals("n")) {
+                break;
+            }
+        }
+
     }
 
     private static void addStudentWithMarks(Scanner scanner) {
@@ -148,7 +148,7 @@ public class StudentManager {
                 } else {
                     System.out.println("Invalid marks. Please enter correct marks.");
                     System.out.println("");
-                } 
+                }
             }
             while (true) {
                 System.out.print("Database Management System Marks : ");
@@ -159,7 +159,7 @@ public class StudentManager {
                 } else {
                     System.out.println("Invalid marks. Please enter correct marks.");
                     System.out.println("");
-                } 
+                }
             }
             studentMarksAdded[studentCount - 1] = true;
             studentMarks[studentCount - 1][2] = studentMarks[studentCount - 1][0] + studentMarks[studentCount - 1][1];
@@ -167,7 +167,7 @@ public class StudentManager {
             String choice = scanner.next();
             if (choice.equals("n")) {
                 break;
-            }       
+            }
         }
     }
 
@@ -188,20 +188,17 @@ public class StudentManager {
                 if (studentIndex != -1) {
                     System.out.println("Student Name : " + studentNames[studentIndex][1]);
                     if (studentMarksAdded[studentIndex] == true) {
-                        System.out.println("""
-                        This student's marks have been already added.
-                        If you want to update the marks, please use [4] Update Marks option
-
-                        Do you want to add marks for another student? (Y/n)
-                        """);
+                        System.out.println(
+                                "This student's marks have been already added.\n" +
+                                        "If you want to update the marks, please use [4] Update Marks option\n" +
+                                        "\n" +
+                                        "Do you want to add marks for another student? (Y/n)");
                         String choice = scanner.next();
                         if (choice.equals("n")) {
                             return;
-                        }
-                        else if (choice.equals("y")) {
+                        } else if (choice.equals("y")) {
                             break;
                         }
-                        
                     }
                     while (true) {
                         System.out.print("Programming Fundamental Marks : ");
@@ -212,7 +209,7 @@ public class StudentManager {
                         } else {
                             System.out.println("Invalid marks. Please enter correct marks.");
                             System.out.println("");
-                        } 
+                        }
                     }
                     while (true) {
                         System.out.print("Database Management System Marks : ");
@@ -223,7 +220,7 @@ public class StudentManager {
                         } else {
                             System.out.println("Invalid marks. Please enter correct marks.");
                             System.out.println("");
-                        } 
+                        }
                     }
                     studentMarksAdded[studentIndex] = true;
                     studentMarks[studentIndex][2] = studentMarks[studentIndex][0] + studentMarks[studentIndex][1];
@@ -231,11 +228,10 @@ public class StudentManager {
                     String choice = scanner.next();
                     if (choice.equals("n")) {
                         return;
-                    }
-                    else if (choice.equals("y")) {
+                    } else if (choice.equals("y")) {
                         break;
                     }
-                    
+
                 }
                 if (studentIndex == -1) {
                     System.out.println("Invalid student ID. Do you want to search again? (Y/n)");
@@ -244,9 +240,9 @@ public class StudentManager {
                         continue;
                     } else if (choice.equals("n")) {
                         return;
-                    }          
+                    }
                 }
-            }                    
+            }
         }
     }
 
@@ -269,12 +265,12 @@ public class StudentManager {
                     System.out.println("Enter the new student name");
                     String name = scanner.next();
                     studentNames[studentIndex][1] = name;
-                    System.out.println("Student details updated successfully. Do you want to update another student's detail? (Y/n)");
+                    System.out.println(
+                            "Student details updated successfully. Do you want to update another student's detail? (Y/n)");
                     String choice = scanner.next();
                     if (choice.equals("n")) {
                         return;
-                    }
-                    else if (choice.equals("y")) {
+                    } else if (choice.equals("y")) {
                         break;
                     }
                 }
@@ -285,7 +281,7 @@ public class StudentManager {
                         continue;
                     } else if (choice.equals("n")) {
                         return;
-                    }          
+                    }
                 }
             }
         }
@@ -308,17 +304,14 @@ public class StudentManager {
                 if (studentIndex != -1) {
                     System.out.println("Student Name : " + studentNames[studentIndex][1]);
                     if (studentMarksAdded[studentIndex] == true) {
-                        System.out.println("""
-                        This student's marks yet to be added.
-                        Do you want to update marks of another student. (Y/n)""");
+                        System.out.println(
+                                "This student's marks yet to be added.\nDo you want to update marks of another student? (Y/n)");
                         String choice = scanner.next();
                         if (choice.equals("n")) {
                             return;
-                        }
-                        else if (choice.equals("y")) {
+                        } else if (choice.equals("y")) {
                             break;
                         }
-                        
                     }
                     System.out.println("Programming Fundamental Marks : " + studentMarks[studentIndex][0]);
                     System.out.println("Database Management System Marks : " + studentMarks[studentIndex][1]);
@@ -332,7 +325,7 @@ public class StudentManager {
                         } else {
                             System.out.println("Invalid marks. Please enter correct marks.");
                             System.out.println("");
-                        } 
+                        }
                     }
                     while (true) {
                         System.out.print("Enter new Database Management System Marks : ");
@@ -343,18 +336,18 @@ public class StudentManager {
                         } else {
                             System.out.println("Invalid marks. Please enter correct marks.");
                             System.out.println("");
-                        } 
+                        }
                     }
                     studentMarks[studentIndex][2] = studentMarks[studentIndex][0] + studentMarks[studentIndex][1];
-                    System.out.println("Marks updated successfully. Do you want to update marks for another student? (Y/n)");
+                    System.out.println(
+                            "Marks updated successfully. Do you want to update marks for another student? (Y/n)");
                     String choice = scanner.next();
                     if (choice.equals("n")) {
                         return;
-                    }
-                    else if (choice.equals("y")) {
+                    } else if (choice.equals("y")) {
                         break;
                     }
-                    
+
                 }
                 if (studentIndex == -1) {
                     System.out.println("Invalid student ID. Do you want to search again? (Y/n)");
@@ -384,22 +377,21 @@ public class StudentManager {
                     }
                 }
                 if (studentIndex != -1) {
-                        for (int i = studentIndex; i < studentCount - 1; i++) {
-                            studentNames[i][0] = studentNames[i + 1][0];
-                            studentNames[i][1] = studentNames[i + 1][1];
-                            studentMarks[i][0] = studentMarks[i + 1][0];
-                            studentMarks[i][1] = studentMarks[i + 1][1];
-                            studentMarksAdded[i] = studentMarksAdded[i + 1];
-                        }
-                        studentCount--;
-                        System.out.println("Student deleted successfully. Do you want to delete another student? (Y/n)");
-                        String choice = scanner.next();
-                        if (choice.equals("n")) {
-                            return;
-                        }
-                        else if (choice.equals("y")) {
-                            break;
-                        }
+                    for (int i = studentIndex; i < studentCount - 1; i++) {
+                        studentNames[i][0] = studentNames[i + 1][0];
+                        studentNames[i][1] = studentNames[i + 1][1];
+                        studentMarks[i][0] = studentMarks[i + 1][0];
+                        studentMarks[i][1] = studentMarks[i + 1][1];
+                        studentMarksAdded[i] = studentMarksAdded[i + 1];
+                    }
+                    studentCount--;
+                    System.out.println("Student deleted successfully. Do you want to delete another student? (Y/n)");
+                    String choice = scanner.next();
+                    if (choice.equals("n")) {
+                        return;
+                    } else if (choice.equals("y")) {
+                        break;
+                    }
                 }
                 if (studentIndex == -1) {
                     System.out.println("Invalid student ID. Do you want to search again? (Y/n)");
@@ -431,7 +423,7 @@ public class StudentManager {
                 if (studentIndex != -1) {
                     int totalMarks = studentMarks[studentIndex][0] + studentMarks[studentIndex][1];
                     float averageMarks = totalMarks / 2;
-                    int rank = 1; 
+                    int rank = 1;
                     for (int i = 0; i < studentCount; i++) {
                         if (i != studentIndex) {
                             int otherTotalMarks = studentMarks[i][2];
@@ -450,8 +442,7 @@ public class StudentManager {
                     String choice = scanner.next();
                     if (choice.equals("n")) {
                         return;
-                    }
-                    else if (choice.equals("y")) {
+                    } else if (choice.equals("y")) {
                         break;
                     }
                 }
@@ -463,7 +454,116 @@ public class StudentManager {
                     } else if (choice.equals("n")) {
                         return;
                     }
+                } else {
+                    System.out.println("No student found with this ID. Do you want to search again? (Y/n)");
+                    String choice = scanner.next();
+                    if (choice.equals("y")) {
+                        continue;
+                    } else if (choice.equals("n")) {
+                        return;
+                    }
                 }
+            }
+
+        }
+    }
+
+    private static void bestInProgrammingFundamentals(Scanner scanner) {
+        while (true) {
+            clearConsole();
+            if (studentCount == 0) {
+                System.out.println("No students available.");
+                System.out.println("Do you want to go back to the main menu? (Y/n)");
+                String choice = scanner.next();
+                if (choice.equals("y")) {
+                    return;
+                } else if (choice.equals("n")) {
+                    continue;
+                }
+            }
+            int[][] studentMarksWithIndices = new int[studentCount][2];
+            for (int i = 0; i < studentCount; i++) {
+                studentMarksWithIndices[i][1] = studentMarks[i][0];
+                studentMarksWithIndices[i][0] = i;
+            }
+            for (int i = 0; i < studentMarksWithIndices.length; i++) {
+                System.out.println(studentMarksWithIndices[i][0]);
+            }
+            for (int i = 0; i < studentCount; i++) {
+                for (int j = i + 1; j < studentCount; j++) {
+                    if (studentMarksWithIndices[i][1] < studentMarksWithIndices[j][1]) {
+                        int temp = studentMarksWithIndices[i][1];
+                        studentMarksWithIndices[i][1] = studentMarksWithIndices[j][1];
+                        studentMarksWithIndices[j][1] = temp;
+                        temp = studentMarksWithIndices[i][0];
+                        studentMarksWithIndices[i][0] = studentMarksWithIndices[j][0];
+                        studentMarksWithIndices[j][0] = temp;
+                    }
+                }
+            }
+            System.out.println("+------------+---------------------+-----------------------------+---------+");
+            System.out.println("| ID         | Name                | Programming Fundamentals    | DBMS    |");
+            System.out.println("+------------+---------------------+-----------------------------+---------+");
+            for (int i = 0; i < studentCount; i++) {
+                System.out.printf("| %-10s | %-19s | %-27d | %-7d |%n", studentNames[studentMarksWithIndices[i][0]][0],
+                        studentNames[studentMarksWithIndices[i][0]][1], studentMarksWithIndices[i][1], studentMarks[studentMarksWithIndices[i][0]][1]);
+            }
+            System.out.println("+------------+---------------------+-----------------------------+---------+");
+            System.out.println("Do you want to go back to main menu? (Y/n)");
+            String choice = scanner.next();
+            if (choice.equals("y")) {
+                return;
+            } else if (choice.equals("n")) {
+                continue;
+            }
+
+        }
+    }
+
+    private static void bestInDatabaseManagementSystem(Scanner scanner) {
+        while (true) {
+            clearConsole();
+            if (studentCount == 0) {
+                System.out.println("No students available.");
+                System.out.println("Do you want to go back to the main menu? (Y/n)");
+                String choice = scanner.next();
+                if (choice.equals("y")) {
+                    return;
+                } else if (choice.equals("n")) {
+                    continue;
+                }
+            }
+            int[][] studentMarksWithIndices = new int[studentCount][2];
+            for (int i = 0; i < studentCount; i++) {
+                studentMarksWithIndices[i][1] = studentMarks[i][1];
+                studentMarksWithIndices[i][0] = i;
+            }
+            for (int i = 0; i < studentCount; i++) {
+                for (int j = i + 1; j < studentCount; j++) {
+                    if (studentMarksWithIndices[i][1] < studentMarksWithIndices[j][1]) {
+                        int temp = studentMarksWithIndices[i][1];
+                        studentMarksWithIndices[i][1] = studentMarksWithIndices[j][1];
+                        studentMarksWithIndices[j][1] = temp;
+                        temp = studentMarksWithIndices[i][0];
+                        studentMarksWithIndices[i][0] = studentMarksWithIndices[j][0];
+                        studentMarksWithIndices[j][0] = temp;
+                    }
+                }
+            }
+            System.out.println("+------------+---------------------+-----------------------------+---------+");
+            System.out.println("| ID         | Name                | Programming Fundamentals    | DBMS    |");
+            System.out.println("+------------+---------------------+-----------------------------+---------+");
+            for (int i = 0; i < studentCount; i++) {
+                System.out.printf("| %-10s | %-19s | %-27d | %-7d |%n", studentNames[studentMarksWithIndices[i][0]][0],
+                        studentNames[studentMarksWithIndices[i][0]][1], studentMarks[studentMarksWithIndices[i][0]][0], studentMarksWithIndices[i][1]);
+            }
+            System.out.println("+------------+---------------------+-----------------------------+---------+");
+            System.out.println("Do you want to go back to main menu? (Y/n)");
+            String choice = scanner.next();
+            if (choice.equals("y")) {
+                return;
+            } else if (choice.equals("n")) {
+                continue;
             }
         }
     }
