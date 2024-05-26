@@ -1,5 +1,4 @@
 package studentManager;
-
 import java.util.Scanner;
 
 public class StudentManager {
@@ -12,16 +11,17 @@ public class StudentManager {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            System.out.println(
-                    "-------------------------------------------------------------------------------\n" +
-                            "|                        Welcome to Student Manager                           |\n" +
-                            "-------------------------------------------------------------------------------\n" +
-                            "\n" +
-                            "[1] Add New Student                    [2] Add New Student With Marks\n" +
-                            "[3] Add Marks                          [4] Update Student Details\n" +
-                            "[5] Update Marks                       [6] Delete Student\n" +
-                            "[7] Print Student Details              [8] Print Student Ranks\n" +
-                            "[9] Best in Programming Fundamentals   [10] Best in Database Management System\n");
+            System.out.println("""
+                    -------------------------------------------------------------------------------
+                    |                        Welcome to Student Manager                           |
+                    -------------------------------------------------------------------------------
+
+                    [1] Add New Student                    [2] Add New Student With Marks
+                    [3] Add Marks                          [4] Update Student Details
+                    [5] Update Marks                       [6] Delete Student
+                    [7] Print Student Details              [8] Print Student Ranks
+                    [9] Best in Programming Fundementals   [10] Best in Database Managemnt System
+                    """);
 
             System.out.print("Enter an option to continue >");
             int choice = scanner.nextInt();
@@ -46,10 +46,11 @@ public class StudentManager {
                     deleteStudent(scanner);
                     break;
                 case 7:
-                    // printStudentDetails(scanner);
+                    printStudentDetails(scanner);
                     break;
                 case 8:
-                    
+                    printStudentRanks(scanner);
+                    break;
                 case 9:
                     bestInProgrammingFundamentals(scanner);
                     break;
@@ -188,17 +189,19 @@ public class StudentManager {
                 if (studentIndex != -1) {
                     System.out.println("Student Name : " + studentNames[studentIndex][1]);
                     if (studentMarksAdded[studentIndex] == true) {
-                        System.out.println(
-                                "This student's marks have been already added.\n" +
-                                        "If you want to update the marks, please use [4] Update Marks option\n" +
-                                        "\n" +
-                                        "Do you want to add marks for another student? (Y/n)");
+                        System.out.println("""
+                                This student's marks have been already added.
+                                If you want to update the marks, please use [4] Update Marks option
+
+                                Do you want to add marks for another student? (Y/n)
+                                """);
                         String choice = scanner.next();
                         if (choice.equals("n")) {
                             return;
                         } else if (choice.equals("y")) {
                             break;
                         }
+
                     }
                     while (true) {
                         System.out.print("Programming Fundamental Marks : ");
@@ -304,14 +307,16 @@ public class StudentManager {
                 if (studentIndex != -1) {
                     System.out.println("Student Name : " + studentNames[studentIndex][1]);
                     if (studentMarksAdded[studentIndex] == true) {
-                        System.out.println(
-                                "This student's marks yet to be added.\nDo you want to update marks of another student? (Y/n)");
+                        System.out.println("""
+                                This student's marks yet to be added.
+                                Do you want to update marks of another student. (Y/n)""");
                         String choice = scanner.next();
                         if (choice.equals("n")) {
                             return;
                         } else if (choice.equals("y")) {
                             break;
                         }
+
                     }
                     System.out.println("Programming Fundamental Marks : " + studentMarks[studentIndex][0]);
                     System.out.println("Database Management System Marks : " + studentMarks[studentIndex][1]);
@@ -432,12 +437,28 @@ public class StudentManager {
                             }
                         }
                     }
+                    String rankString = "";
+                    if (rank == 1) {
+                        rankString = "First";
+                    } else if (rank == 2) {
+                        rankString = "Second";
+                    } else if (rank == 3) {
+                        rankString = "Third";
+                    } else if (rank == studentCount) {
+                        rankString = "Last";
+                    }
                     System.out.println("Student Name : " + studentNames[studentIndex][1]);
-                    System.out.println("Programming Fundamental Marks : " + studentMarks[studentIndex][0]);
-                    System.out.println("Database Management System Marks : " + studentMarks[studentIndex][1]);
-                    System.out.println("Total : " + totalMarks);
-                    System.out.println("Average : " + averageMarks);
-                    System.out.println("Rank : " + rank);
+                    System.out.println(String.format("""
+                            +----------------------------------------+---------------------------+
+                            |Programming Fundamental Marks           | %d                        |
+                            |Database Management System Marks        | %d                        |
+                            |Total Marks                             | %d                        |
+                            |Average Marks                           | %.2f                      |
+                            |Rank                                    | %d  %s                    |
+                            +----------------------------------------+---------------------------+
+                            """,
+                            studentMarks[studentIndex][0], studentMarks[studentIndex][1], totalMarks, averageMarks,
+                            rank, rankString));
                     System.out.println("Do you want to search for another student? (Y/n)");
                     String choice = scanner.next();
                     if (choice.equals("n")) {
@@ -454,20 +475,51 @@ public class StudentManager {
                     } else if (choice.equals("n")) {
                         return;
                     }
-                } else {
-                    System.out.println("No student found with this ID. Do you want to search again? (Y/n)");
-                    String choice = scanner.next();
-                    if (choice.equals("y")) {
-                        continue;
-                    } else if (choice.equals("n")) {
-                        return;
-                    }
                 }
             }
-
         }
     }
 
+    private static void printStudentRanks(Scanner scanner) {
+        while (true) {
+            clearConsole();
+            int[] ranks = new int[studentCount + 1];
+            for (int i = 0; i < studentCount; i++) {
+                int totalMarks = studentMarks[i][2];
+                int rank = 1;
+                for (int j = 0; j < studentCount; j++) {
+                    if (j != i) {
+                        int otherTotalMarks = studentMarks[j][2];
+                        if (otherTotalMarks > totalMarks) {
+                            rank++;
+                        }
+                    }
+                }
+                ranks[rank] = i;
+            }
+            System.out.println(String.format(
+                    "+------+----+-------------------------------+------------+-----------------+"));
+            System.out.println(String.format(
+                    "| Rank | ID | Name                          | Total      | Average         |"));
+            System.out.println(String.format(
+                    "+------+----+-------------------------------+------------+-----------------+"));
+            for (int i = 0; i < studentCount; i++) {
+                System.out.println(String.format(
+                        "| %-4d | %-3s | %-28s | %-10d | %-15.2f |",
+                        i + 1, studentNames[ranks[i + 1]][0], studentNames[ranks[i + 1]][1],
+                        studentMarks[ranks[i + 1]][2], studentMarks[ranks[i + 1]][2] / 2.0));
+            }
+            System.out.println("Do you want to go back to main menu (Y/n)");
+            String choice = scanner.next();
+            if (choice.equals("n")) {
+                continue;
+            } else if (choice.equals("y")) {
+                return;
+            }
+        }
+    }
+
+    
     private static void bestInProgrammingFundamentals(Scanner scanner) {
         while (true) {
             clearConsole();
@@ -567,4 +619,5 @@ public class StudentManager {
             }
         }
     }
+
 }
